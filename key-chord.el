@@ -216,10 +216,6 @@ typed quickly or slowly when recorded.)")
 ;; Internal vars
 (defvar key-chord-mode nil)
 
-;; Shortcut for key-chord-input-method: no need to test a key again if it
-;; didn't matched a chord the last time. Improves feedback during autorepeat.
-(defvar key-chord-last-unmatched nil)
-
 ;; Macro heuristics: Keep track of which chords was used when the last macro
 ;; was defined. Or rather, only the first-char of the chords. Only expand
 ;; matching chords during macro execution.
@@ -327,8 +323,7 @@ Please ignore that."
 
 (defun key-chord-input-method (first-char)
   "Input method controlled by key bindings with the prefix `key-chord'."
-  (if (and (not (eq first-char key-chord-last-unmatched))
-	   (key-chord-lookup-key (vector 'key-chord first-char)))
+  (if (key-chord-lookup-key (vector 'key-chord first-char))
       (let ((delay (if (key-chord-lookup-key (vector 'key-chord first-char first-char))
 		       key-chord-one-key-delay
 		     ;; else
