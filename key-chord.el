@@ -294,14 +294,22 @@ If COMMAND is nil, the key-chord is removed."
       (define-key keymap (vector 'key-chord key1 key2) command)
       (define-key keymap (vector 'key-chord key2 key1) command))))
 
+;; looks through 1 keymap
 (defun key-chord-lookup-key1 (keymap key)
   "Like lookup-key but no third arg and no numeric return value."
   (let ((res (lookup-key keymap key)))
-    (if (numberp res)
+    (if (numberp res) ;; todo jov: why ignore numbers
 	nil
       ;; else
       res)))
 
+;; prioritizes like this:
+;; highest priority: current-minor-mode-maps
+;; lower priority  : current-local-map
+;; lower priority  : current-global-map
+;;
+;; mimics emacs' internal keymap preference
+;; see http://www.gnu.org/software/emacs/manual/html_node/elisp/Active-Keymaps.html
 (defun key-chord-lookup-key (key)
   "Lookup KEY in all current key maps."
   (let ((maps (current-minor-mode-maps))
