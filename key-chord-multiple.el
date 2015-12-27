@@ -7,6 +7,7 @@
 ;; URL: https://github.com/jorenvo/key-chord-multiple
 ;; Maintainer: Joren Van Onder <joren.vanonder@gmail.com>
 ;; Keywords: keyboard chord input
+;; Package-Requires: ((dash "2.12.1"))
 
 ;; This file is NOT part of Emacs.
 ;;
