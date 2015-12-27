@@ -19,6 +19,10 @@ from itertools import permutations
 
 regex_string = ""
 
+if len(sys.argv) == 1:
+    print 'example usage: grep -rn "$(./generate_permutations_regex.py ,hn ,k)" /usr/share/dict/american-english ~/code/github/*'
+    exit(1)
+
 for pattern in sys.argv[1:]:
     pattern_permutations = ["".join(permutation) for permutation in permutations(pattern)]
     regex_string += "\|".join(pattern_permutations) + "\|"
