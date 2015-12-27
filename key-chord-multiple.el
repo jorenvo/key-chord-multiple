@@ -24,6 +24,7 @@
 ;;-------------------------------------------------------------------
 
 ;; Author: Joren Van Onder <joren.vanonder@gmail.com>
+;; URL: https://github.com/jorenvo/key-chord-multiple
 ;; Maintainer: Joren Van Onder <joren.vanonder@gmail.com>
 ;; Keywords: keyboard chord input
 
