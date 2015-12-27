@@ -37,5 +37,4 @@
     (should (equal available-keychord-sequences '()))
     (setq available-keychord-sequences '((1 2 symbol) () (2 2 symbol)))
     (filter-out-empty-lists)
-    (should (equal available-keychord-sequences '((1 2 symbol) (2 2 symbol))))))
-    
+    (should (equal available-keychord-sequences '((1 2 symbol) (2 2 symbol))))))    
