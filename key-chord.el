@@ -379,3 +379,5 @@ Please ignore that."
       ;; instead, which reads all events.
       (let ((input-method-function nil))
         (key-chord-input-method (read-event nil nil key-chord-delay-in-s))))))
+
+(provide 'key-chord)
