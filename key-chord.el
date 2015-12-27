@@ -418,7 +418,10 @@ Please ignore that."
       ;; no matches, redispatch all previous keys followed by this current key
       (progn
         (let ((keys-to-redispatch))
-          (setq keys-to-redispatch (reverse (cons key buffered-keys)))
+          ;; don't return nil as an event from input-method
+          (if key
+              (setq keys-to-redispatch (reverse (cons key buffered-keys)))
+            (setq keys-to-redispatch (reverse buffered-keys)))
           (reset-key-chord)
           keys-to-redispatch))
     (if (and (eq (length available-keychord-sequences) 1) ;; only one keychord left
@@ -436,7 +439,7 @@ Please ignore that."
       ;; return or backspace. Because of this, we use read-event
       ;; instead, which reads all events.
       (let ((input-method-function nil))
-        (key-chord-input-method (read-event))))))
+        (key-chord-input-method (read-event nil nil key-chord-two-keys-delay))))))
 
 ;; (defun key-chord-input-method-new (first-char)
 ;;   (add-to-list 'key-chord-current-buffered-keys first-char)

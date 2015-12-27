@@ -29,7 +29,9 @@
   (should (equal (remove-matching-key '(symbol 1 2) 1) '(symbol 2)))
   (should (equal (remove-matching-key '(symbol 1 2) 5) '()))
   (should (equal (remove-matching-key '(symbol 1 2 3 4) 5) '()))
-  (should (equal (remove-matching-key '(symbol 1 2 3 4) 2) '(symbol 1 3 4))))
+  (should (equal (remove-matching-key '(symbol 1 2 3 4) 2) '(symbol 1 3 4)))
+  (should (equal (remove-matching-key '(symbol 1 2 3 4) nil) '()))
+  (should (equal (remove-matching-key '() nil) '())))
 
 (ert-deftest key-chord-test-filter-out-empty-list ()
   (let ((available-keychord-sequences))
