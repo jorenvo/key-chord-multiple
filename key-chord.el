@@ -202,7 +202,7 @@
 (setq available-keychord-sequences nil)
 (setq buffered-keys nil)
 
-(defvar key-chord-two-keys-delay 0.1	; 0.05 or 0.1
+(defvar key-chord-delay-in-s 0.1	; 0.05 or 0.1
   "Max time delay between two key press to be considered a key chord.")
 
 ;; Internal vars
@@ -218,7 +218,7 @@ With positive ARG enable the mode. With zero or negative arg disable the mode.
 A key chord is two keys that are pressed simultaneously, or one key quickly
 pressed twice.
 \nSee functions `key-chord-define-global', `key-chord-define-local', and
-`key-chord-define' and variables `key-chord-two-keys-delay' and
+`key-chord-define' and variables `key-chord-delay-in-s' and
 `key-chord-one-key-delay'."
 
   (interactive "P")
@@ -378,4 +378,4 @@ Please ignore that."
       ;; return or backspace. Because of this, we use read-event
       ;; instead, which reads all events.
       (let ((input-method-function nil))
-        (key-chord-input-method (read-event nil nil key-chord-two-keys-delay))))))
+        (key-chord-input-method (read-event nil nil key-chord-delay-in-s))))))
