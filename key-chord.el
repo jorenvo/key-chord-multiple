@@ -199,17 +199,13 @@
 
 ;;; Code:
 
-(setq available-keychord-sequences nil)
-(setq buffered-keys nil)
-
 (defvar key-chord-delay-in-s 0.1	; 0.05 or 0.1
   "Max time delay between two key press to be considered a key chord.")
 
 ;; Internal vars
 (defvar key-chord-mode nil)
-
-;; List of currently buffered keys
-(defvar key-chord-current-buffered-keys nil)
+(defvar available-keychord-sequences nil)
+(defvar buffered-keys nil)
 
 ;;;###autoload
 (defun key-chord-mode (arg)
@@ -218,9 +214,7 @@ With positive ARG enable the mode. With zero or negative arg disable the mode.
 A key chord is two keys that are pressed simultaneously, or one key quickly
 pressed twice.
 \nSee functions `key-chord-define-global', `key-chord-define-local', and
-`key-chord-define' and variables `key-chord-delay-in-s' and
-`key-chord-one-key-delay'."
-
+`key-chord-define' and variable `key-chord-delay-in-s'."
   (interactive "P")
   (setq key-chord-mode (if arg
 			   (> (prefix-numeric-value arg) 0)
