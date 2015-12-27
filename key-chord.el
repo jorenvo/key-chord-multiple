@@ -257,21 +257,12 @@ which in most cases is shared with all other buffers in the same major mode."
 
 ;;;###autoload
 (defun key-chord-define (keymap keys command)
-  "Define in KEYMAP, a key-chord of an arbitrary number of keys in KEYS starting a COMMAND.
+  "Define in KEYMAP a key-chord of an arbitrary number of KEYS starting a COMMAND.
 \nKEYS can be a string or a vector. Currently only elements that
 corresponds to ascii codes in the range 32 to 126 can be used.
 \nCOMMAND has to be an interactive function. If COMMAND is nil,
 the key-chord is removed."
   (define-key keymap (vconcat (vector 'key-chord) keys) command))
-
-;; (defun generate-permutations (current-list)
-;;   "Return list of lists containing permutations"
-;;   (mapcar (lambda (head)
-;;             (let ((new-list (append (list head) (remove head current-list))))
-;;               (if (eq (length new-list) 1)
-;;                   head
-;;                 (append (list head) (generate-permutations (cdr new-list))))))
-;;           current-list))
 
 ;; prioritizes like this:
 ;; highest priority: current-minor-mode-maps
