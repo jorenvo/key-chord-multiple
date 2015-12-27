@@ -257,20 +257,12 @@ which in most cases is shared with all other buffers in the same major mode."
 
 ;;;###autoload
 (defun key-chord-define (keymap keys command)
-  "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
-\nKEYS can be a string or a vector of two elements. Currently only elements
-that corresponds to ascii codes in the range 32 to 126 can be used.
-\nCOMMAND can be an interactive function, a string, or nil.
-If COMMAND is nil, the key-chord is removed."
-  (if (/= 2 (length keys))
-      (error "Key-chord keys must have two elements"))
-  ;; Exotic chars in a string are >255 but define-key wants 128..255 for those
-  (let ((key1 (logand 255 (aref keys 0)))
-	(key2 (logand 255 (aref keys 1))))
-    (if (eq key1 key2)
-	(define-key keymap (vector 'key-chord key1 key2) command)
-      ;; else
-      (define-key keymap (vector 'key-chord key1 key2) command))))
+  "Define in KEYMAP, a key-chord of an arbitrary number of keys in KEYS starting a COMMAND.
+\nKEYS can be a string or a vector. Currently only elements that
+corresponds to ascii codes in the range 32 to 126 can be used.
+\nCOMMAND has to be an interactive function. If COMMAND is nil,
+the key-chord is removed."
+  (define-key keymap (vconcat (vector 'key-chord) keys) command))
 
 ;; (defun generate-permutations (current-list)
 ;;   "Return list of lists containing permutations"
