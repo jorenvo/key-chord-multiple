@@ -1,94 +1,29 @@
 ;;; key-chord-multiple.el --- map simultaneously pressed keys to commands
-;;-------------------------------------------------------------------
 ;;
 ;; Copyright (C) 2003,2005,2008,2012 David Andersson
 ;; Copyright (C) 2015 Joren Van Onder
-;;
-;; This file is NOT part of Emacs.
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 3 of
-;; the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be
-;; useful, but WITHOUT ANY WARRANTY; without even the implied
-;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-;; PURPOSE.  See the GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public
-;; License along with this program; if not, write to the Free
-;; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-;; MA 02111-1307 USA
-;;
-;;-------------------------------------------------------------------
 
 ;; Author: Joren Van Onder <joren.vanonder@gmail.com>
 ;; URL: https://github.com/jorenvo/key-chord-multiple
 ;; Maintainer: Joren Van Onder <joren.vanonder@gmail.com>
 ;; Keywords: keyboard chord input
 
-;;; Commentary:
+;; This file is NOT part of Emacs.
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;; ########   Description   ########################################
-;;
-;; This is inspired by key chord mode originally written by David
-;; Andersson. Functionally key chord multiple is similar to key chord
-;; mode, except that in key chord multiple you can define key chords
-;; consisting of an arbitrary number of keys. This was not a trivial
-;; change (look at the diff between this and key-chord.el), in fact
-;; most of the code had to be rewritten. Therefore this will probably
-;; remain a separate program, never to be merged with the original key
-;; chord mode.
-;;
-;; ########   Motivation    ########################################
-;;
-;; I think one of the biggest limitations of key chord mode is finding
-;; accessible key chords that do not conflict with normal typing. A
-;; proposed method to find good key chords is to use a dictionary in
-;; your language to test your key chord against. This helps but is not
-;; guaranteed to detect bad key chords, especially for
-;; programmers. After spending time attempting to find accessible
-;; key chords that do not conflict during regular Emacs use, I have
-;; come to the conclusion that they simply do not exist in large
-;; numbers. It is difficult to find > 10 key chords that are not part
-;; of your regular typing and are also easily accessible (personnally,
-;; the only keys that I consider accessible are all keys on the home
-;; row, the row above it and the row below it, so this does not
-;; include the number keys).
-;; 
-;; Key chord multiple provides a solution to this problem by allowing
-;; key chords to consist of an arbitrary number of keys. This makes it
-;; much easier to find key chords that work well for a user. It
-;; ofcourse also drastically increases the number of available, good
-;; key chords.
-;;
-;; [TODO] maybe provide some fancy POC QWERTY keymap consisting of a
-;; bunch of stuff.
-;;
-;; ########   Limitations   ########################################
-;;
-;; Compared to key chord mode the following functionality was lost:
-;; - key chords in keyboard macros
-;; I might add this back.
-;; - key chords that consist of one key pressed multiple times
-;; I myself probably won't add this back as it is a feature I never
-;; used.
-;; - describing key chords with `describe-key' (C-h k)
-;; Probably won't add this back either, as I don't think it's useful
-;; enough to justify the added complexity.
-;;
-;; key chord multiple supports key chords that consist of an arbitrary
-;; number of keys, your keyboard however may not. A lot of cheap
-;; keyboards do not reliably detect 3 or more keys pressed
-;; simultaneously. If this problem affects you, the only thing you can
-;; do is to buy a better keyboard. Good keyboards will have NKR, which
-;; stands for N-key rollover. This means that it will reliably detect
-;; any combination of simultaneously pressed keys. Important to note
-;; (and something manufacturers sometimes don't mention) is that NKR
-;; is not actually achievable over USB, only over PS/2. An NKR
-;; keyboard over USB should do 6KR though, which is more than
-;; sufficient.
+;;; Commentary:
 
 ;;; Code:
 
