@@ -29,4 +29,8 @@ for pattern in sys.argv[1:]:
 
 regex_string = regex_string[:-2]
 
+# backspaces in input will break it
+for escape_char in "^$[]*.":
+    regex_string = regex_string.replace(escape_char, "\\" + escape_char)
+
 print regex_string
