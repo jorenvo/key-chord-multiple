@@ -1,12 +1,3 @@
-(ert-deftest key-chord-test-key-chord-match ()
-  (should (key-chord-match '() '()))
-  (should (key-chord-match '(a) '(a)))
-  (should (key-chord-match '(a b) '(a b)))
-  (should (not (key-chord-match '() '(a))))
-  (should (not (key-chord-match '(a) '())))
-  (should (not (key-chord-match '(b) '(a b))))
-  (should (not (key-chord-match '(a b) '(b)))))
-
 (ert-deftest key-chord-test-traverse-branch ()
   (let ((available-keychord-sequences)
         (keymap-nil '())
