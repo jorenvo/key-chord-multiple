@@ -205,24 +205,11 @@
 (defvar key-chord-two-keys-delay 0.1	; 0.05 or 0.1
   "Max time delay between two key press to be considered a key chord.")
 
-(defvar key-chord-in-macros t
-  "If nil, don't expand key chords when executing keyboard macros.
-If non-nil, expand chord sequenses in macros, but only if a similar chord was
-entered during the last interactive macro recording. (This carries a bit of
-guesswork. We can't know for sure when executing whether two keys were
-typed quickly or slowly when recorded.)")
-
 ;; Internal vars
 (defvar key-chord-mode nil)
 
 ;; List of currently buffered keys
 (defvar key-chord-current-buffered-keys nil)
-
-;; Macro heuristics: Keep track of which chords was used when the last macro
-;; was defined. Or rather, only the first-char of the chords. Only expand
-;; matching chords during macro execution.
-(defvar key-chord-in-last-kbd-macro nil)
-(defvar key-chord-defining-kbd-macro nil)
 
 ;;;###autoload
 (defun key-chord-mode (arg)
@@ -392,15 +379,3 @@ Please ignore that."
       ;; instead, which reads all events.
       (let ((input-method-function nil))
         (key-chord-input-method (read-event nil nil key-chord-two-keys-delay))))))
-
-(require 'advice)
-
-(defadvice start-kbd-macro (after key-chord activate)
-  (setq key-chord-defining-kbd-macro nil))
-
-(defadvice end-kbd-macro (after key-chord activate)
-  (setq key-chord-in-last-kbd-macro key-chord-defining-kbd-macro))
-
-(provide 'key-chord)
-
-;;; key-chord.el ends here
