@@ -234,25 +234,25 @@ pressed twice.
 
 ;;;###autoload
 (defun key-chord-define-global (keys command)
-  "Define a key-chord of the two keys in KEYS starting a COMMAND.
-\nKEYS can be a string or a vector of two elements. Currently only elements
+  "Define a key-chord of an arbitrary number of KEYS starting a COMMAND.
+\nKEYS can be a string or a vector. Currently only elements
 that corresponds to ascii codes in the range 32 to 126 can be used.
-\nCOMMAND can be an interactive function, a string, or nil.
+\nCOMMAND has to be an interactive function.
 If COMMAND is nil, the key-chord is removed.
 \nNote that KEYS defined locally in the current buffer will have precedence."
-  (interactive "sSet key chord globally (2 keys): \nCSet chord \"%s\" to command: ")
+  (interactive "sSet key chord globally: \nCSet chord \"%s\" to command: ")
   (key-chord-define (current-global-map) keys command))
 
 ;;;###autoload
 (defun key-chord-define-local (keys command)
-  "Locally define a key-chord of the two keys in KEYS starting a COMMAND.
-\nKEYS can be a string or a vector of two elements. Currently only elements
+  "Locally define a key-chord of KEYS starting a COMMAND.
+\nKEYS can be a string or a vector. Currently only elements
 that corresponds to ascii codes in the range 32 to 126 can be used.
-\nCOMMAND can be an interactive function, a string, or nil.
+\nCOMMAND can be an interactive function.
 If COMMAND is nil, the key-chord is removed.
 \nThe binding goes in the current buffer's local map,
 which in most cases is shared with all other buffers in the same major mode."
-  (interactive "sSet key chord locally (2 keys): \nCSet chord \"%s\" to command: ")
+  (interactive "sSet key chord locally: \nCSet chord \"%s\" to command: ")
   (key-chord-define (current-local-map) keys command))
 
 ;;;###autoload
