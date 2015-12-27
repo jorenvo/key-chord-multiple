@@ -199,12 +199,11 @@
 
 ;;; Code:
 
+(setq available-keychord-sequences nil)
+(setq buffered-keys nil)
+
 (defvar key-chord-two-keys-delay 0.1	; 0.05 or 0.1
   "Max time delay between two key press to be considered a key chord.")
-
-(defvar key-chord-one-key-delay 0.2	; 0.2 or 0.3 to avoid first autorepeat
-  "Max time delay between two press of the same key to be considered a key chord.
-This should normally be a little longer than `key-chord-two-keys-delay'.")
 
 (defvar key-chord-in-macros t
   "If nil, don't expand key chords when executing keyboard macros.
@@ -269,16 +268,6 @@ which in most cases is shared with all other buffers in the same major mode."
   (interactive "sSet key chord locally (2 keys): \nCSet chord \"%s\" to command: ")
   (key-chord-define (current-local-map) keys command))
 
-(defun key-chord-unset-global (keys)
-  "Remove global key-chord of the two keys in KEYS."
-  (interactive "sUnset key chord globally (2 keys): ")
-  (key-chord-define (current-local-map) keys nil))
-
-(defun key-chord-unset-local (keys)
-  "Remove local key-chord of the two keys in KEYS."
-  (interactive "sUnset key chord locally (2 keys): ")
-  (key-chord-define (current-local-map) keys nil))
-
 ;;;###autoload
 (defun key-chord-define (keymap keys command)
   "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
@@ -295,15 +284,6 @@ If COMMAND is nil, the key-chord is removed."
 	(define-key keymap (vector 'key-chord key1 key2) command)
       ;; else
       (define-key keymap (vector 'key-chord key1 key2) command))))
-
-;; looks through 1 keymap
-(defun key-chord-lookup-key1 (keymap key)
-  "Like lookup-key but no third arg and no numeric return value."
-  (let ((res (lookup-key keymap key)))
-    (if (numberp res) ;; todo jov: why ignore numbers
-	nil
-      ;; else
-      res)))
 
 ;; (defun generate-permutations (current-list)
 ;;   "Return list of lists containing permutations"
@@ -339,34 +319,6 @@ If COMMAND is nil, the key-chord is removed."
 Please ignore that."
   (interactive)
   (describe-bindings [key-chord]))
-
-;; we need a new input method
-;; the input method should execute the following algorithm
-;;
-;; add current-key to [current-key-chord]
-;; if key-chord-current-buffered-keys matches key-chord:
-;;     execute key-chord
-;; elif partial-match:
-;;     nil ;; do nothing
-;; else:
-;;     replay [current-key-chord]
-;;     empty [current-key-chord]
-
-;; okay, non-stupid version
-;; - keep a set of possible keychords (initially -> all keychords)
-;; - filter possible-keychords on whether it contains the key that's just been pressed
-;; - remove the key that's been pressed from every keychord in possible-keychords
-
-(defun key-chord-a-contains-b (a b)
-  (mapcar (lambda (b-element) (memq b-element a)) b))
-
-(defun key-chord-match (a b)
-  (let ((a-in-b (key-chord-a-contains-b a b))
-        (b-in-a (key-chord-a-contains-b b a)))
-    (not (or (memq nil a-in-b) (memq nil b-in-a)))))
-
-(setq available-keychord-sequences nil)
-(setq buffered-keys nil)
 
 (defun add-to-prefix (prefix element)
   (append prefix (list (car node))))
@@ -440,44 +392,6 @@ Please ignore that."
       ;; instead, which reads all events.
       (let ((input-method-function nil))
         (key-chord-input-method (read-event nil nil key-chord-two-keys-delay))))))
-
-;; (defun key-chord-input-method-new (first-char)
-;;   (add-to-list 'key-chord-current-buffered-keys first-char)
-;;   (let ((matched-key-chord (key-chord-lookup-key (vconcat '(key-chord) key-chord-current-buffered-keys))))
-;;     (if matched-key-chord
-;;         (setq key-chord-matched matched-key-chord)))
-;;   (list first-char))
-
-;; (defun key-chord-input-method (first-char)
-;;   "Input method controlled by key bindings with the prefix `key-chord'."
-;;   (if (key-chord-lookup-key (vector 'key-chord first-char))
-;;       (let ((delay (if (key-chord-lookup-key (vector 'key-chord first-char first-char))
-;; 		       key-chord-one-key-delay
-;; 		     ;; else
-;; 		     key-chord-two-keys-delay)))
-;; 	(if (if executing-kbd-macro
-;; 		(not (memq first-char key-chord-in-last-kbd-macro))
-;; 	      (sit-for delay 0 'no-redisplay))
-;; 	    (progn
-;; 	      (setq key-chord-last-unmatched nil)
-;; 	      (list first-char))
-;; 	  ;; else input-pending-p
-;; 	  (let* ((input-method-function nil)
-;; 		 (next-char (read-event))
-;; 		 (res (vector 'key-chord first-char next-char)))
-;; 	    (if (key-chord-lookup-key res)
-;; 		(progn
-;; 		  (setq key-chord-defining-kbd-macro
-;; 			(cons first-char key-chord-defining-kbd-macro))
-;; 		  (list 'key-chord first-char next-char))
-;; 	      ;; else put back next-char and return first-char
-;; 	      (setq unread-command-events (cons next-char unread-command-events))
-;; 	      (if (eq first-char next-char)
-;; 		  (setq key-chord-last-unmatched first-char))
-;; 	      (list first-char)))))
-;;     ;; else no key-chord keymap
-;;     (setq key-chord-last-unmatched first-char)
-;;     (list first-char)))
 
 (require 'advice)
 
