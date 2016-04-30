@@ -1,4 +1,4 @@
-* key-chord-multiple
+* key-chord-multiple [[https://travis-ci.org/jorenvo/key-chord-multiple][file:https://travis-ci.org/jorenvo/key-chord-multiple.svg?branch=master]]
 A GNU Emacs minor mode that allows binding commands to multiple
 simultaneously pressed keys.
 ** Installation

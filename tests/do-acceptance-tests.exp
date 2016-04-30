@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+
+# debugging
+# exp_internal 1
+
+spawn emacs -nw -Q -L . -L .. -L test_libs --eval "(load \"key-chord-multiple-acceptance-tests.el\")"
+
+# init emacs
+sleep 4
+
+send "ab"
+sleep 1
+send "cd,"
+sleep 1
+send "e"
+sleep 0.5
+send "f"
+
+sleep 1
+send ""
