@@ -20,7 +20,10 @@ wait
 
 send "e"
 wait
-send "f"
-
+send "f,"
 wait
+
+send "ghijklma,"
+wait
+
 send ""

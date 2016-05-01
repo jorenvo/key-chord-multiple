@@ -12,7 +12,8 @@
 
 (defun write-current-line-to-file ()
   (interactive)
-  (write-region (line-beginning-position) (line-end-position) (get-new-test-file)))
+  (write-region (line-beginning-position) (line-end-position) (get-new-test-file))
+  (erase-buffer))
 
 (global-set-key (kbd ",") 'write-current-line-to-file)
 
@@ -37,3 +38,11 @@
   (interactive)
   (write-string-to-file "test-3 failure"))
 (key-chord-define-global "ef" 'test-3)
+
+;; test 4
+;; ensure that pressing a key not part of a key-chord replays all
+;; buffered characters
+(defun test-4 ()
+  (interactive)
+  (write-string-to-file "test-4 failure"))
+(key-chord-define-global "ghijklmn" 'test-4)
