@@ -3,20 +3,24 @@
 # debugging
 # exp_internal 1
 
+proc wait {} {
+    sleep .2
+}
+
 spawn emacs -nw -Q -L .. -L test_libs -l key-chord-multiple-acceptance-tests.el
 
 # wait on emacs init, which is showing the scratch buffer
 expect "This buffer is for notes"
 
 send "ab"
-sleep .2
+wait
 
 send "cd,"
-sleep .2
+wait
 
 send "e"
-sleep .2
+wait
 send "f"
 
-sleep .2
+wait
 send ""
