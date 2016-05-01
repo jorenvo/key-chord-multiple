@@ -12,7 +12,7 @@ curl -s https://raw.githubusercontent.com/magnars/dash.el/master/dash.el > test_
 # unit tests
 emacs -nw -Q --batch -l test_libs/dash.el\
       -l ../key-chord-multiple.el\
-      -l ../key-chord-multiple-tests.el\
+      -l key-chord-multiple-tests.el\
       --eval "(ert-run-tests-batch-and-exit)"
 
 # acceptance tests
