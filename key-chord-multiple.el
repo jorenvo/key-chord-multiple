@@ -87,25 +87,6 @@ corresponds to ascii codes in the range 32 to 126 can be used.
 the key-chord is removed."
   (define-key keymap (vconcat (vector 'key-chord) keys) command))
 
-;; prioritizes like this:
-;; highest priority: current-minor-mode-maps
-;; lower priority  : current-local-map
-;; lower priority  : current-global-map
-;;
-;; mimics emacs' internal keymap preference
-;; see http://www.gnu.org/software/emacs/manual/html_node/elisp/Active-Keymaps.html
-(defun key-chord-lookup-key (key)
-  "Lookup KEY in all current key maps."
-  (let ((maps (current-minor-mode-maps))
-	res)
-    (while (and maps (not res))
-      (setq res (key-chord-lookup-key1 (car maps) key)
-	    maps (cdr maps)))
-    (or res
-	(if (current-local-map)
-	    (key-chord-lookup-key1 (current-local-map) key))
-	(key-chord-lookup-key1 (current-global-map) key))))
-
 (defun key-chord-describe ()
   "List key chord bindings in a help buffer.
 \nTwo key chords will be listed twice and there will be Prefix Commands.
