@@ -5,16 +5,18 @@
 
 spawn emacs -nw -Q -L .. -L test_libs -l key-chord-multiple-acceptance-tests.el
 
-# init emacs
-sleep 4
+# wait on emacs init, which is showing the scratch buffer
+expect "This buffer is for notes"
 
 send "ab"
-sleep 1
+sleep .2
+
 send "cd,"
-sleep 1
+sleep .2
+
 send "e"
-sleep 0.5
+sleep .2
 send "f"
 
-sleep 1
+sleep .2
 send ""
