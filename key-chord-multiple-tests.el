@@ -16,6 +16,7 @@
     (traverse-branch keymap-c)
     (should (equal available-keychord-sequences '((symbol1 1 2 3)
                                                   (symbol2 1 4 5))))))
+
 (ert-deftest key-chord-test-remove-matching-key ()
   (should (equal (remove-matching-key '(symbol 1 2) 1) '(symbol 2)))
   (should (equal (remove-matching-key '(symbol 1 2) 5) '()))
