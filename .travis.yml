@@ -1,3 +1,5 @@
+notifications:
+  email: false
 language: generic
 before_install:
   # PPA for stable Emacs packages
