@@ -26,4 +26,7 @@ wait
 send "ghijklma,"
 wait
 
+send "op"
+wait
+
 send ""

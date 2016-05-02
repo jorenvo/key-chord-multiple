@@ -98,7 +98,8 @@ Please ignore that."
   (append prefix (list (car node))))
 
 (defun traverse-branch (node &optional prefix)
-  (if (listp (cdr node))
+  (if (and (listp (cdr node))
+           (not (functionp (cdr node))))
       ;; if node has children
       (mapc (lambda (child)
               (traverse-branch child (append prefix (list (car node)))))
@@ -152,7 +153,7 @@ Please ignore that."
           keys-to-redispatch))
     (if (and (eq (length available-keychord-sequences) 1) ;; only one keychord left
              (eq (length (car available-keychord-sequences)) 1) ;; in the keychord we only have 1 element left
-             (symbolp (caar available-keychord-sequences))) ;; element is symbol (should be function to execute)
+             (functionp (caar available-keychord-sequences))) ;; element is function that can be executed
         ;; full match, execute symbol
         (progn
           (funcall (caar available-keychord-sequences))

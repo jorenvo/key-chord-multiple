@@ -46,3 +46,9 @@
   (interactive)
   (write-string-to-file "test-4 failure"))
 (key-chord-define-global "ghijklmn" 'test-4)
+
+;; test 5
+;; test whether we can bind to lambda
+(key-chord-define-global "op" (lambda ()
+                                (interactive)
+                                (write-string-to-file "test-5 success")))
