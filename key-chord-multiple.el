@@ -161,7 +161,7 @@ Please ignore that."
       ;; > 0 matches, but no full match, buffer and wait
       (setq buffered-keys (cons key buffered-keys))
       ;; it would be nicer to just be able to use the input method
-      ;; function, it does not read non-printing characters like
+      ;; function, but it does not read non-printing characters like
       ;; return or backspace. Because of this, we use read-event
       ;; instead, which reads all events.
       (let ((input-method-function nil))
