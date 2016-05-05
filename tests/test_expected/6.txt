@@ -1,0 +1,1 @@
+this should insert something -> test-6 success <- ending macro

@@ -29,4 +29,8 @@ wait
 send "op"
 wait
 
+send "(this should insert something -> q <- ending macro)"
+send "e,"
+wait
+
 send ""

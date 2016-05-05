@@ -52,3 +52,9 @@
 (key-chord-define-global "op" (lambda ()
                                 (interactive)
                                 (write-string-to-file "test-5 success")))
+
+;; test 6
+;; test whether we can execute a single key key-chord in a keyboard macro
+(key-chord-define-global "q" (lambda ()
+                               (interactive)
+                               (insert "test-6 success")))
