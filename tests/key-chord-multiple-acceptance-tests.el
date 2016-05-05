@@ -58,3 +58,9 @@
 (key-chord-define-global "q" (lambda ()
                                (interactive)
                                (insert "test-6 success")))
+
+;; test 7
+;; test whether we can execute a multi key key-chord in a keyboard macro
+(key-chord-define-global "rst" (lambda ()
+                                 (interactive)
+                                 (insert "test-7 success")))

@@ -33,4 +33,8 @@ send "(this should insert something -> q <- ending macro)"
 send "e,"
 wait
 
+send "(this should insert something -> rst <- ending macro)"
+send "e,"
+wait
+
 send ""
