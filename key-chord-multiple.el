@@ -49,12 +49,12 @@ pressed twice.
   (setq key-chord-mode (if arg
 			   (> (prefix-numeric-value arg) 0)
 			 (not key-chord-mode)))
-  (cond (key-chord-mode
-	 (setq input-method-function 'key-chord-input-method)
-	 (message "Key Chord mode on"))
-	(t
-	 (setq input-method-function nil)
-	 (message "Key Chord mode off"))))
+  (if key-chord-mode
+      (progn
+        (setq input-method-function 'key-chord-input-method)
+        (message "Key Chord mode on"))
+    (setq input-method-function nil)
+    (message "Key Chord mode off")))
 
 ;;;###autoload
 (defun key-chord-define-global (keys command)
