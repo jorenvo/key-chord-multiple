@@ -64,3 +64,7 @@
 (key-chord-define-global "rst" (lambda ()
                                  (interactive)
                                  (insert "test-7 success")))
+
+;; test 8
+;; test switch-to-buffer, C-g, letter
+(key-chord-define-global "uv" 'switch-to-buffer)

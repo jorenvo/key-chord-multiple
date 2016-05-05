@@ -37,4 +37,12 @@ send "(this should insert something -> rst <- ending macro)"
 send "e,"
 wait
 
+# for some reason doing uv in one send doesn't work, so wait in between
+send "uv"
+wait
+send ""
+wait
+send "a,"
+wait
+
 send ""

@@ -154,11 +154,11 @@ Please ignore that."
           keys-to-redispatch))
     (if (and (eq (length available-keychord-sequences) 1) ;; only one keychord left
              (eq (length (car available-keychord-sequences)) 1) ;; in the keychord we only have 1 element left
-             (functionp (caar available-keychord-sequences))) ;; element is function that can be executed
+             (commandp (caar available-keychord-sequences))) ;; element is function that can be executed
         ;; full match, execute symbol
-        (progn
-          (funcall (caar available-keychord-sequences))
+        (let ((command-to-execute (caar available-keychord-sequences)))
           (reset-key-chord)
+          (command-execute command-to-execute)
           nil)
       ;; > 0 matches, but no full match, buffer and wait
       (setq buffered-keys (cons key buffered-keys))
