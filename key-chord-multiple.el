@@ -29,7 +29,8 @@
 ;;; Code:
 
 (defvar key-chord-delay-in-s 0.1	; 0.05 or 0.1
-  "Max time delay between two key press to be considered a key chord.")
+  "Maximum time delay in seconds between two key press to be
+considered a key chord.")
 
 ;; Internal vars
 (defvar key-chord-mode nil)
