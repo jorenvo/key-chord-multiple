@@ -1,0 +1,6 @@
+{
+  "name": "Key-chord-multiple",
+  "tagline": "A GNU Emacs minor mode that allows binding commands to multiple simultaneously pressed keys.",
+  "body": "# key-chord-multiple\r\n\r\nA GNU Emacs minor mode that allows binding commands to multiple\r\nsimultaneously pressed keys.\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
