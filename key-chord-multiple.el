@@ -52,9 +52,9 @@ pressed twice.
   (if key-chord-mode
       (progn
         (setq input-method-function 'key-chord-input-method)
-        (message "Key Chord mode on"))
+        (message "Key Chord Multiple mode on"))
     (setq input-method-function nil)
-    (message "Key Chord mode off")))
+    (message "Key Chord Multiple mode off")))
 
 ;;;###autoload
 (defun key-chord-define-global (keys command)
