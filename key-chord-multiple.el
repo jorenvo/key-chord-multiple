@@ -36,6 +36,8 @@ considered a key chord.")
 (defvar key-chord-mode nil)
 (defvar available-keychord-sequences nil)
 (defvar buffered-keys nil)
+(defvar last-executed-key nil)
+(defvar last-executed-command nil)
 
 ;;;###autoload
 (defun key-chord-mode (arg)
@@ -132,42 +134,50 @@ Please ignore that."
   (setq available-keychord-sequences nil))
 
 (defun key-chord-input-method (key)
-  (if (eq (length available-keychord-sequences) 0)
-      (build-available-keychord-sequences))
-  (setq available-keychord-sequences
-        (mapcar (lambda (key-chord-sequence)
-                  (remove-matching-key key-chord-sequence key))
-                available-keychord-sequences))
+  (if (and (eq last-executed-key key)
+           (commandp last-executed-command))
+      (command-execute last-executed-command)
+    (setq last-executed-key nil)
+    (setq last-executed-command nil)
 
-  ;; filter out empty lists. maybe not necessary?
-  (filter-out-empty-lists)
+    (if (eq (length available-keychord-sequences) 0)
+        (build-available-keychord-sequences))
+    (setq available-keychord-sequences
+          (mapcar (lambda (key-chord-sequence)
+                    (remove-matching-key key-chord-sequence key))
+                  available-keychord-sequences))
 
-  (if (eq (length available-keychord-sequences) 0)
-      ;; no matches, redispatch all previous keys followed by this current key
-      (progn
-        (let ((keys-to-redispatch))
-          ;; don't return nil as an event from input-method
-          (if key
-              (setq keys-to-redispatch (reverse (cons key buffered-keys)))
-            (setq keys-to-redispatch (reverse buffered-keys)))
-          (reset-key-chord)
-          keys-to-redispatch))
-    (if (and (eq (length available-keychord-sequences) 1) ;; only one keychord left
-             (eq (length (car available-keychord-sequences)) 1) ;; in the keychord we only have 1 element left
-             (commandp (caar available-keychord-sequences))) ;; element is function that can be executed
-        ;; full match, execute symbol
-        (let ((command-to-execute (caar available-keychord-sequences)))
-          (reset-key-chord)
-          (command-execute command-to-execute)
-          nil)
-      ;; > 0 matches, but no full match, buffer and wait
-      (setq buffered-keys (cons key buffered-keys))
-      ;; it would be nicer to just be able to use the input method
-      ;; function, but it does not read non-printing characters like
-      ;; return or backspace. Because of this, we use read-event
-      ;; instead, which reads all events.
-      (let ((input-method-function nil))
-        (key-chord-input-method (read-event nil nil key-chord-delay-in-s))))))
+    ;; filter out empty lists. maybe not necessary?
+    (filter-out-empty-lists)
+
+    (if (eq (length available-keychord-sequences) 0)
+        ;; no matches, redispatch all previous keys followed by this current key
+        (progn
+          (let ((keys-to-redispatch))
+            ;; don't return nil as an event from input-method
+            (if key
+                (setq keys-to-redispatch (reverse (cons key buffered-keys)))
+              (setq keys-to-redispatch (reverse buffered-keys)))
+            (reset-key-chord)
+            keys-to-redispatch))
+      (if (and (eq (length available-keychord-sequences) 1) ;; only one keychord left
+               (eq (length (car available-keychord-sequences)) 1) ;; in the keychord we only have 1 element left
+               (commandp (caar available-keychord-sequences))) ;; element is function that can be executed
+          ;; full match, execute symbol
+          (let ((command-to-execute (caar available-keychord-sequences)))
+            (setq last-executed-key key)
+            (setq last-executed-command command-to-execute)
+            (reset-key-chord)
+            (command-execute command-to-execute)
+            nil)
+        ;; > 0 matches, but no full match, buffer and wait
+        (setq buffered-keys (cons key buffered-keys))
+        ;; it would be nicer to just be able to use the input method
+        ;; function, but it does not read non-printing characters like
+        ;; return or backspace. Because of this, we use read-event
+        ;; instead, which reads all events.
+        (let ((input-method-function nil))
+          (key-chord-input-method (read-event nil nil key-chord-delay-in-s)))))))
 
 (provide 'key-chord-multiple)
 ;;; key-chord-multiple.el ends here

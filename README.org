@@ -55,5 +55,20 @@ combination of simultaneously pressed keys. Important to note (and
 something manufacturers sometimes don't mention) is that NKR is not
 actually achievable over USB, only over PS/2. An NKR keyboard over USB
 should do 6KR though, which is more than sufficient.
+** Ideas
+To facilitate repeating a command by holding down the key chord
+ideally key up events would be monitored to detect when a key chord is
+released. The Emacs input system does not detect these types of events
+however. Mostly because in a non-graphical environment these types of
+events don't exist.
 
+It is possible to get this to work by polling keys using =evtest=
+e.g.:
+
+#+BEGIN_EXAMPLE
+# evtest --query by-id/usb-04d9_USB-HID_Keyboard-event-kbd EV_KEY 30
+#+END_EXAMPLE
+
+Will return 10 when the 'A' key is pressed. Note that this has to run
+as root.
 

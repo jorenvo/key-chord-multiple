@@ -29,7 +29,7 @@
   (write-string-to-file "test-1 success"))
 (key-chord-define-global "ab" 'test-1)
 
-;; test 2
+;; TODO test 2
 ;; writes two chars followed by ,
 
 ;; test 3
@@ -68,3 +68,13 @@
 ;; test 8
 ;; test switch-to-buffer, C-g, letter
 (key-chord-define-global "uv" 'switch-to-buffer)
+
+;; test 9
+;; test if a command gets repeated by pressing the last chord key again
+;; sdf
+(setq test-9-counter 0)
+(key-chord-define-global "sdf" (lambda ()
+                                 (interactive)
+                                 (if (> test-9-counter 0)
+                                     (insert "test-9 success"))
+                                 (setq test-9-counter (+ test-9-counter 1))))

@@ -45,4 +45,14 @@ wait
 send "a,"
 wait
 
+# trigger command
+send "sdf"
+# should repeat once before saving
+send "f,"
+
+wait
+
+# todo remove this
+send ""
+
 send ""
